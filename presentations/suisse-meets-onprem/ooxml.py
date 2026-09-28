@@ -8,6 +8,7 @@ NS = ('xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" '
       'xmlns:p="http://schemas.openxmlformats.org/presentationml/2006/main"')
 REL = "http://schemas.openxmlformats.org/officeDocument/2006/relationships"
 FONT = "Arial"
+LANG = "en-US"
 
 
 def e(v):
@@ -27,7 +28,7 @@ def ln_xml(color=None, w=0.75, dash=None, tail=None):
 
 
 def run(text, sz=14, color="000000", b=False, i=False, spc=None):
-    attrs = f'lang="en-US" sz="{int(sz * 100)}"'
+    attrs = f'lang="{LANG}" sz="{int(sz * 100)}"'
     if b:
         attrs += ' b="1"'
     if i:
