@@ -63,7 +63,7 @@ for k, (big, small) in enumerate(facts):
 # ================================ Folie 2 ====================================
 s2 = Slide(bg=WHITE)
 header(s2, "So funktioniert's",
-       "Eine Kopie der Suisse-Meets-Web-App plus KI-Modelle – alles in Ihrem Rechenzentrum.")
+       "Eine Kopie der Suisse-Meets-Web-App plus KI-Modelle – alles bei Ihnen vor Ort.")
 
 cw, gap, cy, ch = 2.45, 0.75, 2.4, 1.95
 x0 = (W - (4 * cw + 3 * gap)) / 2
@@ -78,7 +78,7 @@ fx0, fx1 = xs[1] - 0.2, xs[3] + cw + 0.2
 s2.shape(fx0, 1.85, fx1 - fx0, 3.75, line=RED, line_w=1.5, dash="dash", geom="roundRect", radius=4000,
          name="Rahmen Rechenzentrum")
 s2.text(fx0 + 0.25, 1.95, 5.0, 0.35,
-        [para(run("IHR RECHENZENTRUM", 12, RED, b=True, spc=150))], anchor="ctr")
+        [para(run("BEI IHNEN VOR ORT  ·  MAC STUDIO", 12, RED, b=True, spc=150))], anchor="ctr")
 
 for k, (n, title, desc) in enumerate(steps):
     s2.shape(xs[k], cy, cw, ch, fill=TINT, geom="roundRect", radius=7000, inset=(0.22, 0.2, 0.22, 0.2),
@@ -93,7 +93,7 @@ for k, (n, title, desc) in enumerate(steps):
 s2.shape(xs[1], 4.65, fx1 - 0.2 - xs[1], 0.68, fill=INK, geom="roundRect", radius=12000, anchor="ctr",
          inset=(0.2, 0.05, 0.2, 0.05), name="Speicher",
          paras=[para([run("Speicherung  ", 16, WHITE, b=True),
-                      run("verschlüsselt, auf Ihren eigenen Servern", 16, SOFT_D)], algn="ctr")])
+                      run("verschlüsselt, auf Ihrem eigenen NAS", 16, SOFT_D)], algn="ctr")])
 
 bw = (W - 2 * M - 0.3) / 2
 for k, (lab, txt, col) in enumerate([
@@ -106,43 +106,51 @@ for k, (lab, txt, col) in enumerate([
 
 # ================================ Folie 3 ====================================
 s3 = Slide(bg=WHITE)
-header(s3, "Hardware-Empfehlung", "Ein Server genügt – alle KI-Modelle laufen lokal auf einer Grafikkarte.")
+header(s3, "Unsere Empfehlung: Mac Studio", "Einfach, leise und sofort einsatzbereit – kein Serverraum nötig.")
 
-tiers = [
-    dict(tag="KOMPAKT", name="Mac Studio", spec="M5 Ultra · 96 GB",
-         pts=["bis ca. 30 Nutzer", "2–3 parallele Sitzungen"], price="CHF 6–8k", dark=False),
-    dict(tag="EMPFOHLEN", name="GPU-Server", spec="NVIDIA RTX PRO 6000 · 96 GB",
-         pts=["50–300 Nutzer", "~15 parallele Sitzungen"], price="CHF 25–40k", dark=True),
-    dict(tag="ENTERPRISE", name="2 GPU-Server", spec="redundant, ohne Ausfallpunkt",
-         pts=["300–1'500 Nutzer", "40+ parallele Sitzungen"], price="CHF 90–130k", dark=False),
-]
-tw_, ty, th = (W - 2 * M - 2 * 0.35) / 3, 1.95, 4.1
-for k, t in enumerate(tiers):
-    x = M + k * (tw_ + 0.35)
-    dk = t["dark"]
-    body = WHITE if dk else TEXT
-    sub = SOFT_D if dk else MUTED
-    s3.shape(x, ty, tw_, th, fill=INK if dk else TINT, geom="roundRect", radius=5000, name=t["tag"])
-    if dk:
-        s3.shape(x + 0.35, ty + 0.35, 1.55, 0.36, fill=RED, geom="roundRect", radius=50000, anchor="ctr",
-                 inset=(0, 0, 0, 0), paras=[para(run(t["tag"], 11, WHITE, b=True, spc=120), algn="ctr")])
-    else:
-        s3.text(x + 0.35, ty + 0.35, 2.5, 0.36, [para(run(t["tag"], 11, MUTED, b=True, spc=120))], anchor="ctr")
-    s3.text(x + 0.35, ty + 0.9, tw_ - 0.7, 1.05,
-            [para(run(t["name"], 26, body, b=True), after=2), para(run(t["spec"], 15, sub))], anchor="t")
-    s3.text(x + 0.35, ty + 2.05, tw_ - 0.7, 0.9,
-            [para(run(p, 16, body), after=6, bullet="•", bullet_color=RED, indent=0.22) for p in t["pts"]])
-    s3.text(x + 0.35, ty + th - 0.95, tw_ - 0.7, 0.65,
-            [para([run(t["price"], 28, body, b=True)])], anchor="ctr")
+top, bot = 1.85, 6.3
+# Komplettpaket (links)
+px_, pw = M, 6.0
+s3.shape(px_, top, pw, bot - top, fill=INK, geom="roundRect", radius=4000, name="Komplettpaket")
+s3.shape(px_ + 0.4, top + 0.35, 1.95, 0.36, fill=RED, geom="roundRect", radius=50000, anchor="ctr",
+         paras=[para(run("KOMPLETTPAKET", 11, WHITE, b=True, spc=120), algn="ctr")])
+s3.text(px_ + 0.4, top + 0.85, pw - 0.8, 0.85, [para(run("CHF 55'000", 44, WHITE, b=True))], anchor="ctr")
+s3.text(px_ + 0.4, top + 1.7, pw - 0.8, 0.35,
+        [para(run("einmalig, inkl. Hardware, exkl. MWST", 14, MUTED_D))], anchor="ctr")
+items = ["2 × Mac Studio M5 Ultra, 256 GB – redundant",
+         "NAS-Speicher mit Backup und USV",
+         "Konferenzmikrofone für 5 Sitzungszimmer",
+         "Installation, Integration und Schulung",
+         "Suisse Meets Lizenz und Support im 1. Jahr"]
+s3.text(px_ + 0.4, top + 2.3, pw - 0.8, 1.95,
+        [para(run(t, 15, WHITE), after=6, bullet="•", bullet_color=RED, indent=0.24) for t in items])
 
-s3.text(M, 6.3, W - 2 * M, 0.45,
-        [para([run("Einführung in 6–8 Wochen", 15, TEXT, b=True),
-               run("   ·   Updates offline und signiert   ·   Support nur über Ihr VPN", 15, MUTED)])],
-        anchor="ctr")
-s3.text(M, 6.8, W - 2 * M, 0.35,
-        [para(run("Richtpreise nur Hardware, exkl. MWST, Stand September 2026. "
-                  "Kapazitäten sind Schätzungen und werden im Abnahmetest bestätigt.", 10.5, MUTED))],
-        anchor="ctr")
+# Warum Mac Studio (rechts)
+rx = px_ + pw + 0.45
+rw = W - M - rx
+s3.text(rx, top, rw, 0.3, [para(run("WARUM MAC STUDIO?", 12, RED, b=True, spc=150))], anchor="ctr")
+reasons = [("Einfach", "Plug & Play – kein Serverraum, kein Rack, keine Spezialkühlung."),
+           ("Leise und sparsam", "Steht im Büro und braucht nur einen Bruchteil des Stroms eines GPU-Servers."),
+           ("Ausfallsicher", "Zwei Geräte teilen sich die Last. Fällt eines aus, übernimmt das andere.")]
+for k, (t, d) in enumerate(reasons):
+    y = top + 0.45 + k * 0.95
+    num_y = y + 0.05
+    s3.shape(rx, num_y, 0.46, 0.46, fill=RED, geom="ellipse", anchor="ctr",
+             paras=[para(run(str(k + 1), 15, WHITE, b=True), algn="ctr")])
+    s3.text(rx + 0.65, y, rw - 0.65, 0.85,
+            [para(run(t, 17, TEXT, b=True), after=2), para(run(d, 13.5, MUTED), line=105)])
+
+tw3 = (rw - 2 * 0.2) / 3
+for k, (big, small) in enumerate([("~100", "Nutzer"), ("~8", "parallele Sitzungen"), ("4–6", "Wochen bis Go-live")]):
+    s3.shape(rx + k * (tw3 + 0.2), bot - 1.0, tw3, 1.0, fill=TINT, geom="roundRect", radius=9000,
+             inset=(0.1, 0.08, 0.1, 0.08), anchor="ctr",
+             paras=[para(run(big, 24, RED, b=True), algn="ctr", after=1),
+                    para(run(small, 11.5, MUTED), algn="ctr")])
+
+s3.text(M, 6.55, W - 2 * M, 0.55,
+        [para(run("Richtpreis Stand September 2026. Kapazitäten sind Schätzungen und werden im Abnahmetest "
+                  "bestätigt. Für Organisationen ab ca. 300 Nutzern: GPU-Server-Variante auf Anfrage.",
+                  10.5, MUTED), line=105)], anchor="ctr")
 
 out = sys.argv[1] if len(sys.argv) > 1 else "Suisse_Meets_OnPrem_DE.pptx"
 write_pptx(out, [s1, s2, s3],
