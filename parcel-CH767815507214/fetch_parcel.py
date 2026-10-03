@@ -21,6 +21,11 @@ import urllib.parse
 import requests
 import xmltodict
 
+try:  # Windows consoles default to cp1252
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+except Exception:
+    pass
+
 EGRID = sys.argv[1] if len(sys.argv) > 1 else "CH767815507214"
 E, N = (float(sys.argv[2]), float(sys.argv[3])) if len(sys.argv) > 3 else (2670029.816, 1246145.570)
 
@@ -341,7 +346,7 @@ for key, layer in {
 r = get(f"{GEOADMIN}/height", {"easting": E, "northing": N, "sr": 2056})
 fed["height_m"] = r.json() if r else None
 
-(DATA / "geoadmin_context.json").write_text(json.dumps(fed, ensure_ascii=False, indent=1))
+(DATA / "geoadmin_context.json").write_text(json.dumps(fed, ensure_ascii=False, indent=1), encoding="utf-8")
 
 # Aerial photo, cadastral plan, national map and zoning around the parcel
 pad = max(bbox[2] - bbox[0], bbox[3] - bbox[1]) * 0.6 + 30
@@ -367,9 +372,9 @@ for name, layers in {
         if r and r.headers.get("Content-Type", "").startswith("image"):
             (MAPS / f"{name}_{view}.png").write_bytes(r.content)
             log(f"  map {name}_{view}.png")
-(DATA / "map_views_bbox_lv95.json").write_text(json.dumps(views, indent=1))
+(DATA / "map_views_bbox_lv95.json").write_text(json.dumps(views, indent=1), encoding="utf-8")
 if ring:
-    (DATA / "parcel_polygon_lv95.json").write_text(json.dumps(ring))
+    (DATA / "parcel_polygon_lv95.json").write_text(json.dumps(ring), encoding="utf-8")
 
 # --------------------------------------------------------------------------
 # 4. Extra public documents worth keeping next to the extract
@@ -397,6 +402,6 @@ summary["federal"] = {
     "n_buildings_on_parcel": len(on_parcel),
     "height": fed.get("height_m"),
 }
-(OUT / "summary.json").write_text(json.dumps(summary, ensure_ascii=False, indent=1))
-(OUT / "fetch_log.txt").write_text("\n".join(LOG))
+(OUT / "summary.json").write_text(json.dumps(summary, ensure_ascii=False, indent=1), encoding="utf-8")
+(OUT / "fetch_log.txt").write_text("\n".join(LOG), encoding="utf-8")
 log("== done")
